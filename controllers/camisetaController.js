@@ -91,7 +91,7 @@ const getLanzamiento = async (req, res) => {
     const camisetas = await Camiseta.findAll({
       where: { lanzamiento: true }
     });
-    return res.json(camisetas);
+    return camisetas?res.json(camisetas): [];
   } catch (error) {
     return res.status(500).json({ message: 'Error al obtener camisetas en lanzamiento', error: error.message });
   }
@@ -101,7 +101,7 @@ const getOferta = async (req, res) => {
     const camisetas = await Camiseta.findAll({
       where: { oferta: true }
     });
-    return res.json(camisetas);
+    return camisetas?res.json(camisetas): [];
   } catch (error) {
     return res.status(500).json({ message: 'Error al obtener camisetas en lanzamiento', error: error.message });
   }

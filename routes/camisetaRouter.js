@@ -5,9 +5,9 @@ const camisetaController = require("../controllers/camisetaController");
 
 router
   .get("/", camisetaController.get)
-  .get("/:id",camisetaController.getById)
   .get("/lanzamiento",camisetaController.getLanzamiento)
   .get("/oferta",camisetaController.getOferta)
+  .get("/:id",camisetaController.getById)
   .post("/",authenticate, authorizeAdmin,camisetaController.create,)
   .put("/:id",authenticate, authorizeAdmin,camisetaController.update)
   .delete("/:id",authenticate, authorizeAdmin,camisetaController.destroy)
