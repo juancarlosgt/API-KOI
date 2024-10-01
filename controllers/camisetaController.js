@@ -1,7 +1,7 @@
 
 
 const Camiseta = require('../models/camiseta');
-
+const Color = require('../models/color')
 
 const get = async (req, res) => {
   try {
@@ -31,12 +31,12 @@ const getById = async (req, res) => {
 const create = async (req, res) => {
     try {
       console.log(req.body); 
-      const { nombre, imagen, subColeccionId} = req.body;
+      const { nombre, imagen,lanzamiento,oferta,subColeccionId} = req.body;
       if (!nombre || !imagen || !subColeccionId) {
         res.status(400).json({ mensaje: 'Faltan datos obligatorios' });
         return;
       }
-      const camiseta = await Camiseta.create({ nombre, imagen,subColeccionId });
+      const camiseta = await Camiseta.create({ nombre, imagen,lanzamiento,oferta,subColeccionId });
       res.json(camiseta);
     } catch (error) {
       console.error(error);
@@ -106,6 +106,26 @@ const getOferta = async (req, res) => {
     return res.status(500).json({ message: 'Error al obtener camisetas en lanzamiento', error: error.message });
   }
 }
+
+const getColor = async(req,res) =>{
+  const { camisetaId } = req.params;
+  const camiseta = await Camiseta.findByPk(camisetaId, {
+    include: Color
+  });
+  res.json(camiseta.Colors); // Asumiendo que la relación se llama Colores
+}
+const addColor = async(req,res) =>{
+  const { camisetaId, colorId } = req.params;
+  const camiseta = await Camiseta.findByPk(camisetaId);
+  await camiseta.addColor(colorId); // Método generado
+  res.status(200).json({message:'Camiseta asociada al color'});
+}
+const deleteColor = async(req,res) =>{
+  const { camisetaId, colorId } = req.params;
+  const camiseta = await Camiseta.findByPk(camisetaId);
+  await camiseta.removeColor(colorId); // Método generado
+  res.status(200).json({message:'Camiseta desasociada del color'});
+}
 module.exports = {
  get,
  getById,
@@ -113,5 +133,8 @@ module.exports = {
  update,
  destroy,
  getLanzamiento,
- getOferta
+ getOferta,
+ getColor,
+ addColor,
+ deleteColor
 };

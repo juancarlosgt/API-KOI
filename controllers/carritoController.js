@@ -3,9 +3,9 @@ const carritoService = require('../services/carritoService')
 const addItemToCart = async (req, res) => {
   try {
     const userId = req.user.userId; // Suponiendo que ya tienes autenticación JWT
-    const { productId,quantity ,price,color} = req.body;
+    const { productId,cantidad ,tipoCamisaId,color} = req.body;
 
-    await carritoService.addItemToCart(userId, productId, quantity,price,color);
+    await carritoService.addItemToCart(userId, productId, tipoCamisaId,cantidad,color);
     res.status(200).json({ message: 'Artículo agregado al carrito' });
   } catch (error) {
     res.status(500).json({ error: 'Error al agregar artículo al carrito ' + error.message});

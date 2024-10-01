@@ -11,8 +11,7 @@ const Usuario = sequelize.define('Usuario', {
       },
     username: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
+    allowNull: false,    
     validate: {
       notEmpty: true
     }
@@ -26,6 +25,22 @@ const Usuario = sequelize.define('Usuario', {
     }
   },
   password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  telefono: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  departamento: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  ciudad: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  direccion: {
     type: DataTypes.STRING,
     allowNull: false
   },

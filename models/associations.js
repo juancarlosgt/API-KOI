@@ -4,6 +4,11 @@ const ItemCarrito = require('./itemCarrito');
 const Coleccion = require('./coleccion');
 const SubColeccion = require('./SubColeccion');
 const Camiseta = require('./camiseta');
+const TipoCamisa = require('./tipoCamisa');
+const Color = require('./color');
+// const Pedido = require('./pedido');
+// const ItemPedido = require('./itemPedido');
+
 module.exports = () => {
 // Relación 1 a 1 entre Usuario y Carrito
 Usuario.hasOne(Carrito, { foreignKey: 'userId' });
@@ -20,4 +25,21 @@ SubColeccion.belongsTo(Coleccion, { foreignKey: 'coleccionId' });
 // SubColeccion tiene muchas Camisetas
 SubColeccion.hasMany(Camiseta, { foreignKey: 'subColeccionId', onDelete: 'CASCADE' });
 Camiseta.belongsTo(SubColeccion, { foreignKey: 'subColeccionId' });
+
+ItemCarrito.belongsTo(TipoCamisa, { foreignKey: 'tipoCamisaId' });
+TipoCamisa.hasMany(ItemCarrito, { foreignKey: 'tipoCamisaId' });
+
+// // Un usuario tiene muchos pedidos
+// Usuario.hasMany(Pedido, { foreignKey: 'userId' });
+// Pedido.belongsTo(Usuario, { foreignKey: 'userId' });
+
+// // Un pedido tiene muchos items
+// Pedido.hasMany(ItemPedido, { foreignKey: 'pedidoId' });
+// ItemPedido.belongsTo(Pedido, { foreignKey: 'pedidoId' });
+
+// // Un ItemPedido está relacionado con una camiseta
+// ItemPedido.belongsTo(Camiseta, { foreignKey: 'productId' });
+
+Camiseta.belongsToMany(Color, { through: 'Camiseta_Color' });
+Color.belongsToMany(Camiseta, { through: 'Camiseta_Color'});
 }

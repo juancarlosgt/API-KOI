@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../db');
+const TipoCamisa = require('./tipoCamisa');
 
 // Modelo ItemCarrito
 const ItemCarrito = db.define('ItemCarrito', {
@@ -15,16 +16,23 @@ const ItemCarrito = db.define('ItemCarrito', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'Camiseta', // Supongamos que 'Camiseta' es tu modelo de productos
+      model: 'Camiseta', 
       key: 'id',
     },
   },
-  quantity: {
+  tipoCamisaId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: TipoCamisa,
+      key: 'id',
+    },
+  },
+  cantidad: {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 1,
   },
-  price: {
+  precio: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
