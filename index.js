@@ -27,10 +27,10 @@ app.use('/api/carrito',carritoRouter);
 app.use('/api/colecciones',coleccionRouter);
 app.use('/api/sub-colecciones',subColeccionRouter);
 app.use('/api/colores',coloresRouter);
-app.use('/api/tipo',tipoCamisaRouter)
+app.use('/api/tipo',tipoCamisaRouter);
 //app.use('/api/pedido',pedidoRouter);
 
-sequelize.sync({ force: false})
+sequelize.sync({ force: true})
   .then(() => console.log('Base de datos sincronizada'))
   .catch(err => console.error('Error al sincronizar la base de datos', err));
 

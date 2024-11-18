@@ -12,9 +12,6 @@ const Camiseta = sequelize.define('Camiseta', {
   nombre: {
     type: DataTypes.STRING
   },
-  imagen: {
-    type: DataTypes.STRING
-  },
   lanzamiento: {
     type: DataTypes.BOOLEAN,
     defaultValue: false

@@ -2,7 +2,7 @@
 
 const Camiseta = require('../models/camiseta');
 const Color = require('../models/color')
-
+const Imagen = require('../models/imagen')
 const get = async (req, res) => {
   try {
     const camisetas = await Camiseta.findAll();
@@ -31,12 +31,12 @@ const getById = async (req, res) => {
 const create = async (req, res) => {
     try {
       console.log(req.body); 
-      const { nombre, imagen,lanzamiento,oferta,subColeccionId} = req.body;
-      if (!nombre || !imagen || !subColeccionId) {
+      const { nombre,lanzamiento,oferta,subColeccionId} = req.body;
+      if (!nombre || !subColeccionId) {
         res.status(400).json({ mensaje: 'Faltan datos obligatorios' });
         return;
       }
-      const camiseta = await Camiseta.create({ nombre, imagen,lanzamiento,oferta,subColeccionId });
+      const camiseta = await Camiseta.create({ nombre,lanzamiento,oferta,subColeccionId });
       res.json(camiseta);
     } catch (error) {
       console.error(error);
@@ -46,17 +46,16 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   try {
     const id = req.params.id;
-    const { nombre, imagen,lanzamiento,oferta,subColeccionId} = req.body;
+    const { nombre,lanzamiento,oferta,subColeccionId} = req.body;
     const camiseta = await Camiseta.findByPk(id);
     if (!camiseta) {
       res.status(404).json({ mensaje: 'Camiseta no encontrada' });
-    } else if(!nombre || !imagen){
+    } else if(!nombre){
         res.status(400).json({ mensaje: 'Faltan datos obligatorios' });
         return;
     }
     else{
-      camiseta.nombre = nombre;
-      camiseta.imagen = imagen;
+      camiseta.nombre = nombre;      
       camiseta.lanzamiento = lanzamiento ;
       camiseta.oferta = oferta;
       camiseta.subColeccionId = subColeccionId;  
@@ -126,6 +125,59 @@ const deleteColor = async(req,res) =>{
   await camiseta.removeColor(colorId); // Método generado
   res.status(200).json({message:'Camiseta desasociada del color'});
 }
+const obtenerImagenesDeCamiseta = async (req, res) => {
+  const { camisetaId } = req.params; // ID de la camiseta desde los parámetros de la solicitud
+
+  try {
+    const imagenes = await Imagen.findAll({
+      where: { camisetaId }
+    });
+
+    if (imagenes.length === 0) {
+      return res.status(404).json({ error: 'No se encontraron imágenes para esta camiseta' });
+    }
+
+    res.status(200).json(imagenes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener las imágenes' });
+  }
+};
+const agregarImagenACamiseta = async (req, res) => {
+  const { camisetaId } = req.params;
+  const { url } = req.body; // Asegúrate de que la URL de la imagen se envíe en el cuerpo de la solicitud
+
+  try {
+    const camiseta = await Camiseta.findByPk(camisetaId);
+    if (!camiseta) {
+      return res.status(404).json({ error: 'Camiseta no encontrada' });
+    }
+
+    const nuevaImagen = await Imagen.create({ url, camisetaId });
+    res.status(201).json(nuevaImagen);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al agregar la imagen' });
+  }
+};
+const eliminarImagen = async (req, res) => {
+  const { id } = req.params; // Asumiendo que el ID de la imagen se pasa como parámetro
+
+  try {
+    const deleted = await Imagen.destroy({
+      where: { id }
+    });
+
+    if (deleted) {
+      return res.status(204).json(); // No content
+    }
+    return res.status(404).json({ error: 'Imagen no encontrada' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al eliminar la imagen' });
+  }
+};
+
 module.exports = {
  get,
  getById,
@@ -136,5 +188,8 @@ module.exports = {
  getOferta,
  getColor,
  addColor,
- deleteColor
+ deleteColor,
+ agregarImagenACamiseta,
+ eliminarImagen,
+ obtenerImagenesDeCamiseta
 };

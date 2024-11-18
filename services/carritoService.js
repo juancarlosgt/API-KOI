@@ -6,7 +6,7 @@ const TipoCamisa = require('../models/tipoCamisa')
 // const ItemPedido = require('../models/itemPedido');
 
 
-const addItemToCart = async (userId, productId, tipoCamisaId, cantidad, color) => {
+const addItemToCart = async (userId, productId, tipoCamisaId, cantidad, color,talla) => {
   const carrito = await Carrito.findOne({ where: { userId } });
   const product = await Camiseta.findByPk(productId);
   const tipo = await TipoCamisa.findByPk(tipoCamisaId);
@@ -21,10 +21,12 @@ const addItemToCart = async (userId, productId, tipoCamisaId, cantidad, color) =
   await ItemCarrito.create({
     carritoId: carrito.id,
     productId:product.id,
-    tipoCamisaId,
+    nombre:product.nombre,
+    tipoCamisaId: tipo.nombre,
     cantidad,
     precio: tipo.precio,
-    color
+    color,
+    talla
   });
   //}
 

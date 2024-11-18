@@ -20,6 +20,10 @@ const ItemCarrito = db.define('ItemCarrito', {
       key: 'id',
     },
   },
+  nombre:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
   tipoCamisaId: {
     type: DataTypes.INTEGER,
     references: {
@@ -40,6 +44,10 @@ const ItemCarrito = db.define('ItemCarrito', {
     type: DataTypes.STRING,
     allowNull:false,
   },
+  talla: {
+    type: DataTypes.STRING,
+    allowNull:false
+  }
 }, {
   tableName: 'ItemCarrito',
 });
