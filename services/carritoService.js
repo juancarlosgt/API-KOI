@@ -22,7 +22,7 @@ const addItemToCart = async (userId, productId, tipoCamisaId, cantidad, color,ta
     carritoId: carrito.id,
     productId:product.id,
     nombre:product.nombre,
-    tipoCamisaId: tipo.nombre,
+    tipoCamisaId: tipo.id,
     cantidad,
     precio: tipo.precio,
     color,
