@@ -1,4 +1,5 @@
 
+const Camiseta = require('../models/camiseta');
 const SubColeccion = require('../models/SubColeccion');
 
 const get = async (req, res) => {
@@ -78,10 +79,28 @@ const getById = async (req, res) => {
       res.status(500).json({ mensaje: 'Error al eliminar SubColeccion' });
     }
   };  
+  const getCamisetas = async(req,res)=>{
+    const subColeccionId = req.params.id;
+    try {
+      const camisetas = await Camiseta.findAll({
+        where: { subColeccionId }
+      });
+  
+      if (camisetas.length === 0) {
+        return res.status(404).json({ error: 'No se encontraron Camisetas para esta Subcoleccion' });
+      }
+  
+      res.status(200).json(camisetas);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al obtener las Camisetas' });
+    }
+  }
 module.exports = {
     get,
     getById,
     create,
     update,
-    destroy
+    destroy,
+    getCamisetas
 };  

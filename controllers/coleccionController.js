@@ -1,5 +1,6 @@
 const { col } = require('sequelize');
 const Coleccion = require('../models/coleccion');
+const SubColeccion = require('../models/SubColeccion');
 
 const get = async (req, res) => {
     try {
@@ -77,10 +78,28 @@ const getById = async (req, res) => {
       res.status(500).json({ mensaje: 'Error al eliminar Coleccion' });
     }
   };  
+  const getSubcoleccion = async(req,res)=>{
+    const coleccionId = req.params.id;
+    try {
+      const subColecciones = await SubColeccion.findAll({
+        where: { coleccionId }
+      });
+  
+      if (subColecciones.length === 0) {
+        return res.status(404).json({ error: 'No se encontraron SubColecciones para esta Coleccion' });
+      }
+  
+      res.status(200).json(subColecciones);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al obtener las SubColecciones' });
+    }
+  }
 module.exports = {
     get,
     getById,
     create,
     update,
-    destroy
+    destroy,
+    getSubcoleccion
 };  

@@ -6,6 +6,7 @@ const subColeccionController = require("../controllers/subColeccionController");
 router
   .get("/", subColeccionController.get)
   .get("/:id",subColeccionController.getById)
+  .get("/:id/camisetas",subColeccionController.getCamisetas)
   .post("/",authenticate, authorizeAdmin,subColeccionController.create,)
   .put("/:id",authenticate, authorizeAdmin,subColeccionController.update)
   .delete("/:id",authenticate, authorizeAdmin,subColeccionController.destroy)

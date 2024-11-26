@@ -8,7 +8,7 @@ const addItemToCart = async (req, res) => {
     await carritoService.addItemToCart(userId, productId, tipoCamisaId,cantidad,color,talla);
     res.status(200).json({ message: 'Artículo agregado al carrito' });
   } catch (error) {
-    res.status(500).json({ error: 'Error al agregar artículo al carrito ' + error.message});
+    res.status(500).json({ error: 'Error al agregar artículo al carrito ' + error.message });
   }
 };
 
