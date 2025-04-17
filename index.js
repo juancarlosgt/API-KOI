@@ -13,6 +13,7 @@ const coleccionRouter = require('./routes/coleccionRouter');
 const subColeccionRouter = require('./routes/subColeccionRouter');
 const coloresRouter = require('./routes/colorRouter');
 const tipoCamisaRouter = require('./routes/tipoCamisaRouter');
+const tallaRouter = require('./routes/tallaRouter');
 //const pedidoRouter= require('./routes/pedidoRouter');
 
 app.use(cors());
@@ -28,6 +29,7 @@ app.use('/api/colecciones',coleccionRouter);
 app.use('/api/sub-colecciones',subColeccionRouter);
 app.use('/api/colores',coloresRouter);
 app.use('/api/tipo',tipoCamisaRouter);
+app.use('/api/talla',tallaRouter)
 //app.use('/api/pedido',pedidoRouter);
 
 sequelize.sync({ force: false})
