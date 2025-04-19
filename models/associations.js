@@ -7,8 +7,6 @@ const Camiseta = require('./camiseta');
 const TipoCamisa = require('./tipoCamisa');
 const Color = require('./color');
 const Imagen = require('./imagen')
-const Tipo = require('./tipoCamisa');
-const Talla = require('./talla')
 // const Pedido = require('./pedido');
 // const ItemPedido = require('./itemPedido');
 
@@ -47,12 +45,6 @@ Camiseta.hasMany(ItemCarrito, { onDelete: 'CASCADE'});
 
 Camiseta.belongsToMany(Color, { through: 'Camiseta_Color' });
 Color.belongsToMany(Camiseta, { through: 'Camiseta_Color'});
-
-Camiseta.belongsToMany(Tipo, { through: 'Camiseta_Tipo' });
-Tipo.belongsToMany(Camiseta, { through: 'Camiseta_Tipo'});
-
-Camiseta.belongsToMany(Talla, { through: 'Camiseta_Talla' });
-Talla.belongsToMany(Camiseta, { through: 'Camiseta_Talla'});
 
 Camiseta.hasMany(Imagen, {foreignKey: 'camisetaId', onDelete: 'CASCADE'});// Campo de la tabla Imagen que referencia a Camiseta// Opcional: elimina las imágenes si se elimina la camiseta
 Imagen.belongsTo(Camiseta, {foreignKey: 'camisetaId',});
