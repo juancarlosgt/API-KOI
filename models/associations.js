@@ -28,10 +28,8 @@ SubColeccion.hasMany(Camiseta, { foreignKey: 'subColeccionId', onDelete: 'CASCAD
 Camiseta.belongsTo(SubColeccion, { foreignKey: 'subColeccionId' });
 
 ItemCarrito.belongsTo(TipoCamisa, { foreignKey: 'tipoCamisaId' });
-TipoCamisa.hasMany(ItemCarrito, { foreignKey: 'tipoCamisaId' , onDelete: 'CASCADE'});
+TipoCamisa.hasMany(ItemCarrito, { foreignKey: 'tipoCamisaId' });
 
-ItemCarrito.belongsTo(Camiseta);
-Camiseta.hasMany(ItemCarrito, { onDelete: 'CASCADE'});
 // // Un usuario tiene muchos pedidos
 // Usuario.hasMany(Pedido, { foreignKey: 'userId' });
 // Pedido.belongsTo(Usuario, { foreignKey: 'userId' });
