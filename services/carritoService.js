@@ -59,6 +59,11 @@ const getCartItemsByUser = async (userId) => {
     });
 
     const items = carrito.items || [];
+    var precio=0;
+    items.forEach(item => {
+      precio+=item.precio * item.cantidad
+    });
+    carrito.totalPrice=precio;
     return {
       totalPrice: carrito.totalPrice,
       items: items
